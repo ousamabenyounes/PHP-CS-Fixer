@@ -258,6 +258,10 @@ final class BracesPositionFixer extends AbstractFixer implements ConfigurableFix
                     $allowSingleLine = true === $this->configuration['allow_single_line_anonymous_functions'];
                     $positionOption = 'anonymous_functions_opening_brace';
                 } else {
+                    // Empty named function bodies are governed by SingleLineEmptyBodyFixer, which
+                    // keeps them as `{}`. Do not insert a newline into an already single-line empty
+                    // body, otherwise both fixers form a no-op cycle (expand then collapse).
+                    $allowSingleLineIfEmpty = true;
                     $positionOption = 'functions_opening_brace';
                 }
             } elseif ($token->isGivenKind(self::CONTROL_STRUCTURE_TOKENS)) {

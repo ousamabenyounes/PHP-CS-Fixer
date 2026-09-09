@@ -64,6 +64,16 @@ final class BracesPositionFixerTest extends AbstractFixerTestCase
                 }',
         ];
 
+        yield 'empty named function body with multiline signature is left single-line (no cycle with single_line_empty_body)' => [
+            '<?php
+                class Repro
+                {
+                    public function __construct(
+                        bool $a,
+                    ) {}
+                }',
+        ];
+
         yield 'if (next line)' => [
             '<?php
                 if ($foo)
