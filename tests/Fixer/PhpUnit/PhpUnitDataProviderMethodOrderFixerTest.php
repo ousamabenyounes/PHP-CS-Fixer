@@ -380,6 +380,78 @@ final class PhpUnitDataProviderMethodOrderFixerTest extends AbstractFixerTestCas
                 PHP,
         ];
 
+        yield 'placement after_last - data provider between uses is moved after the last use' => [
+            <<<'PHP'
+                <?php
+                class FooTest extends TestCase {
+                    /** @dataProvider provideFooCases */
+                    public function testFoo(): void {}
+                    /** @dataProvider provideFooCases */
+                    public function testBar(): void {}
+                    public function provideFooCases(): iterable {}
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                class FooTest extends TestCase {
+                    /** @dataProvider provideFooCases */
+                    public function testFoo(): void {}
+                    public function provideFooCases(): iterable {}
+                    /** @dataProvider provideFooCases */
+                    public function testBar(): void {}
+                }
+                PHP,
+            ['placement' => 'after_last'],
+        ];
+
+        yield 'placement after_first - data provider is moved right after the first use only' => [
+            <<<'PHP'
+                <?php
+                class FooTest extends TestCase {
+                    /** @dataProvider provideFooCases */
+                    public function testFoo(): void {}
+                    public function provideFooCases(): iterable {}
+                    /** @dataProvider provideFooCases */
+                    public function testFoo2(): void {}
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                class FooTest extends TestCase {
+                    public function provideFooCases(): iterable {}
+                    /** @dataProvider provideFooCases */
+                    public function testFoo(): void {}
+                    /** @dataProvider provideFooCases */
+                    public function testFoo2(): void {}
+                }
+                PHP,
+            ['placement' => 'after_first'],
+        ];
+
+        yield 'placement before_first - data provider is moved before the first use' => [
+            <<<'PHP'
+                <?php
+                class FooTest extends TestCase {
+                    public function provideFooCases(): iterable {}
+                    /** @dataProvider provideFooCases */
+                    public function testFoo(): void {}
+                    /** @dataProvider provideFooCases */
+                    public function testFoo2(): void {}
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                class FooTest extends TestCase {
+                    /** @dataProvider provideFooCases */
+                    public function testFoo(): void {}
+                    /** @dataProvider provideFooCases */
+                    public function testFoo2(): void {}
+                    public function provideFooCases(): iterable {}
+                }
+                PHP,
+            ['placement' => 'before_first'],
+        ];
+
         yield 'multiple data providers defined by both annotation and attribute' => [
             <<<'PHP'
                 <?php

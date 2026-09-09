@@ -20,7 +20,7 @@ Configuration
 
 Where to place the data provider relative to the test where used.
 
-Allowed values: ``'after'`` and ``'before'``
+Allowed values: ``'after'``, ``'after_first'``, ``'after_last'``, ``'before'`` and ``'before_first'``
 
 Default value: ``'after'``
 
