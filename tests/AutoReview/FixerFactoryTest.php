@@ -439,6 +439,7 @@ final class FixerFactoryTest extends TestCase
             'declare_strict_types' => [
                 'blank_line_after_opening_tag',
                 'declare_equal_normalize',
+                'file_docblock_before_declare',
                 'header_comment',
             ],
             'dir_constant' => [

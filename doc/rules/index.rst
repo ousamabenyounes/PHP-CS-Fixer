@@ -274,6 +274,9 @@ Comment
 - `comment_to_phpdoc <./comment/comment_to_phpdoc.rst>`_ *(risky, configurable)*
 
   Comments with annotation should be docblock when used on structural elements.
+- `file_docblock_before_declare <./comment/file_docblock_before_declare.rst>`_
+
+  A file-level docblock placed after ``declare`` statements must be moved before them, as required by PSR-12.
 - `header_comment <./comment/header_comment.rst>`_ *(configurable)*
 
   Add, replace or remove header comment.
